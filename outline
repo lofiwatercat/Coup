@@ -1,3 +1,16 @@
 5 different characters, 3 each
 
+
 50 coins
+
+Moderator actions:
+    help - print the moderator actions with explanations
+    stats - print the character cards and status of them of the players, the coins
+    add - add coins to a player
+    remove - remove coins from a player
+
+
+Players
+    names
+    coins
+    character cards

@@ -6,26 +6,41 @@ import random
 
 # This is the script for the card game Coup
 
-# Starting a while loop that will take inputs for the game. Enter 'e' to exit
-
-game_condition = True
-
-print('The game begins now. Enter \'e\' to exit at any time. Or press ctrl c if stuff breaks.')
-
-players = input('How many players are in the game? ')
-if players == 'e':
-    game_condition = False
-
 # Making a list of the character cards
 
 char_deck = ['Duke', 'Duke', 'Duke', 'Assassin', 'Assassin', 'Assassin', 'Ambassador', 'Ambassador', 'Ambassador', 'Captain', 'Captain', 'Captain', 'Contessa', 'Contessa', 'Contessa']
 
 random.shuffle(char_deck)
 
+# making the treasury
+treasury = 50
+
 # Making a class for the players
 
 class Player:
-    def __init__(self, name, lcard, rcard, coins):
-        pass
+    def __init__(self, name):
+        self.name = name
+        self.cards = [[char_deck.pop(), 'hidden'], [char_deck.pop(), 'hidden']]
+        self.coins = 2
+    
+    # method to get player stats
+    def player_stats(self):
+        print(self.name)
+        for x in self.cards:
+            print(x)
+        print('coins:', self.coins)
 
-print(char_deck)
+
+# making a list of the players
+
+players = []
+
+# making some methods to view the stats
+
+def stats():
+    for x in players:
+        x.player_stats()
+
+p1 = Player('Alan')
+players.append(p1)
+stats()
