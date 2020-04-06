@@ -18,6 +18,7 @@ class Player:
         self.name = name
         self.cards = [[char_deck.pop(), 'hidden'], [char_deck.pop(), 'hidden']]
         self.coins = 2
+        self.revealed = []
     
     # method to get player stats
     def player_stats(self):
@@ -62,18 +63,20 @@ def stats_mod():
         print()
         x.player_stats()
 
-# making some methods to view the stats
+# shows the names of the players and their coins
 def stats():
-    print('Treasury:', treasury)
-    print('Number of characters in deck:', len(char_deck))
-    for x in players:
+    for x in order_of_players:
         print()
-        x.player_stats()
+        print(x.name)
+        print(x.coins, 'coins')
+        if len(x.revealed) != 0:
+            print(x.revealed)
 
-# initializes the game state and returns outputs for each player
-def init(names):
-
-
+# initalizes the players
+def init(*args):
+    for x in args:
+        players[x] = Player(x)
+        order_of_players.append(Player(x))
 
 # pops a character from the deck
 def get_one():
@@ -91,7 +94,21 @@ def add_char(*args):
         char_deck.append(x)
     random.shuffle(char_deck)
 
+# reveals a character card
+def kill(Player, str):
+    str = str.capitalize()
+    for x in Player.cards:
+        if x[0] == str and x[1] == 'hidden':
+            x[1] = 'revealed'
+            Player.revealed.append(x[0])
+
 ############# END OF MOD ACTIONS #############
+
+init('Alan', 'Colin', 'Wilson') 
+players['Alan'].player_stats()
+stats_mod()
+print()
+
 
 # utility functions
 
@@ -163,16 +180,7 @@ def function_signature(cmd):
     else:
         return "not found"
 
-'''
-p1 = Player('Alan')
-p2 = Player('Colin')
-players.append(p1)
-players.append(p2)
-print(p2.name)
-players.append(Player('Wilson'))
-print(players.name)
-'''
-
+# game loop
 while True:
     cmd_tokens = input("Enter command: ").lower().split()
 
