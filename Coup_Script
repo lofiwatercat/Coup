@@ -22,6 +22,7 @@ class Player:
         self.name = name
         self.cards = [[char_deck.pop(), 'hidden'], [char_deck.pop(), 'hidden']]
         self.coins = 2
+        self.revealed = []
     
     # method to get player stats
     def player_stats(self):
@@ -57,12 +58,18 @@ def help_actions():
     pass
     
 # making some methods to view the stats
-def stats():
+def stats_mod():
     print('Treasury:', treasury)
     print('Number of characters in deck:', len(char_deck))
     for x in players:
         print()
         x.player_stats()
+
+# shows the names of the players and their coins
+def stats():
+    for x in players:
+        print x.name
+    
 
 # pops a character from the deck
 def get_one():
@@ -80,10 +87,19 @@ def add_char(*args):
         char_deck.append(x)
     random.shuffle(char_deck)
 
+# reveals a character card
+def kill(Player, str):
+    str = str.capitalize()
+    for x in Player.cards:
+        if x[0] == str and x[1] == 'hidden':
+            x[1] = 'revealed'
+
 p1 = Player('Alan')
 p2 = Player('Colin')
 players.append(p1)
 players.append(p2)
 print(p2.name)
 players.append(Player('Wilson'))
-print(players.name)
+stats()
+kill(p1, 'Assassin')
+stats()
