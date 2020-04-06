@@ -4,14 +4,30 @@
 50 coins
 
 Moderator actions:
-    help - print the moderator actions with explanations
+    help - print rules, mod actions, and explantions 
+
+    help_rules - print the rules
+
+    help_actions - print mod actions and explantions
+    
     stats_mod - prints the coins left in the treasury, the cards left in the deck, the names of the players, their cards and status, and their coins. Intended for mod use only 
+
     stats - prints name of players, the name of any revealed cards they have, and their amount of coins
+
+    init [player] [player] etc... - initalizes the players
+    
     add [player] [number] - add coins to a player
+
     remove [player] [number] - remove coins from a player
+
     get_one - draw one card from the character deck. Mod needs to dm the player the cards they drew. Usually used when a player uses an ambassador exchange but they already lost an influence.
+
     get_two - draw two cards from the character deck. Mod needs to dm the player the cards they drew. Usually used when a player uses their ambassador exchange.
+
     add_char [character] - adds a character card to the character deck. Automatically randomizes the deck.
+
+    kill [player] [card] - reveals the player's card
+
     
 
 
