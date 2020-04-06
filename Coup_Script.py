@@ -78,7 +78,10 @@ def stats():
 
 # initalizes the players
 def init(*args):
-    
+    for x in args:
+        players[x] = Player(x)
+        order_of_players.append(Player(x))
+
     
 
 # pops a character from the deck
@@ -105,12 +108,7 @@ def kill(Player, str):
             x[1] = 'revealed'
             Player.revealed.append(x[0])
 
-            
-p1 = Player('Wilson')
-players['Alan'] = Player('Alan')
-players['Colin'] = Player('Colin')
-order_of_players.append(p1)
-stats()
-kill(p1, 'Assassin')
-stats()
+init('Alan', 'Colin', 'Wilson') 
+players['Alan'].player_stats()
 stats_mod()
+print()
