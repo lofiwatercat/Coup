@@ -26,13 +26,19 @@ class Player:
             print(x)
         print('coins:', self.coins)
 
-    # method to add/remove coins
-    def change_coins(self, number):
+    # method to add coins
+    def add(self, number):
         self.coins = self.coins + number 
 
-# making a list of the players, mapping name to the Player object
+    # method to remove coins
+    def remove(self, number):
+        self.coins = self.coins - number
 
+# making a list of the players
 players = {}
+
+# making an order of players
+order_of_players = []
 
 ############# START OF MOD ACTIONS #############
 
@@ -43,11 +49,19 @@ def help():
 # prints the rules
 def help_rules():
     pass
-
+    
 # prints the mod actions and explanations for using them
 def help_actions():
     pass
-    
+
+# making some methods to view the stats
+def stats_mod():
+    print('Treasury:', treasury)
+    print('Number of characters in deck:', len(char_deck))
+    for x in order_of_players:
+        print()
+        x.player_stats()
+
 # making some methods to view the stats
 def stats():
     print('Treasury:', treasury)

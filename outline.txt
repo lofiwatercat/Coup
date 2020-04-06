@@ -1,25 +1,35 @@
 5 different characters, 3 each
-
-
 50 coins
 
 Moderator actions:
-    help - print the moderator actions with explanations
-    stats - print the character cards and status of them of the players, the coins (copy-paste to players)
-    stats_mod - print the full information of game state for the mod (don't show this)
-    init [player1] [player2] [...] [playern] - initialize the cards for each player, and print the cards to dm to each player
+    help - print rules, mod actions, and explantions 
+
+    help_rules - print the rules
+
+    help_actions - print mod actions and explantions
+    
+    stats_mod - prints the full game state: coins left in the treasury, the cards left in the deck, the names of the players, their cards and status, and their coins (intended for mod use only) 
+
+    stats - prints name of players, the name of any revealed cards they have, and their amount of coins (to copy-paste to players)
+
+    init [player] [player] etc... - initalizes the players
+    
     add [player] [number] - add coins to a player
+
     remove [player] [number] - remove coins from a player
+    
     exchange [player] [card1] [optional, card2] - change player's cards to card1, or card1 + card2. Returns previous cards to the deck; to be used during after two cards are drawn for ambassador.
+    
     replace [player] [card] - puts the card back into the deck, and draws a random card. To be used after challenged player wins the challenge by revealing the given card.
+    
     kill [player] [card] - marks card as revealed in internal game state, and prints notification for DM to copy-paste into public chat.
+    
     get_two - draw two cards from the character deck. Mod needs to dm the player the cards they drew. Usually used when a player uses their ambassador exchange.
            
 
 Hidden moderator actions:
     add_char [character] - adds a character card to the character deck. Automatically randomizes the deck.
     get_one - draw one card from the character deck. Mod needs to dm the player the cards they drew. Usually used when a player uses an ambassador exchange but they already lost an influence.
-
 
 
 Players
