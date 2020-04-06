@@ -111,7 +111,6 @@ players['Alan'].player_stats()
 kill(players['Alan'], 'Assassin')
 stats()
 print()
-stats_mod()
 
 
 # utility functions
