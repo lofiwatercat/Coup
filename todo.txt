@@ -1,3 +1,4 @@
 - Add name handling for duplicate names
 - Move the error checking into separate file and import
 - Add two hidden commands to the checker
+- Compress function signature
