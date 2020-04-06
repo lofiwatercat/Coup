@@ -6,8 +6,15 @@
 Moderator actions:
     help - print the moderator actions with explanations
     stats - print the character cards and status of them of the players, the coins
-    add - add coins to a player
-    remove - remove coins from a player
+    add [player] [number] - add coins to a player
+    remove [player] [number] - remove coins from a player
+    get_one - draw one card from the character deck. Mod needs to dm the player the cards they drew. Usually used when a player uses an ambassador exchange but they already lost an influence.
+    get_two - draw two cards from the character deck. Mod needs to dm the player the cards they drew. Usually used when a player uses their ambassador exchange.
+    add_char [character] - adds a character card to the character deck. Automatically randomizes the deck.
+    
+
+
+
 
 
 Players

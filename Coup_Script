@@ -30,17 +30,57 @@ class Player:
             print(x)
         print('coins:', self.coins)
 
+    # method to add coins
+    def add(self, number):
+        self.coins = self.coins + number 
+
+    # method to remove coins
+    def remove(self, number):
+        self.coins = self.coins - number
 
 # making a list of the players
 
 players = []
 
-# making some methods to view the stats
+# BEGINNING MOD ACTIONS
 
+# this method prints everything a mod needs, including the rules and explanation of the mod actions 
+def help():
+    pass
+
+# prints the rules
+def help_rules():
+    pass
+
+# prints the mod actions and explanations for using them
+def help_actions():
+    pass
+    
+# making some methods to view the stats
 def stats():
+    print('Treasury:', treasury)
+    print('Number of characters in deck:', len(char_deck))
     for x in players:
+        print()
         x.player_stats()
 
+# pops a character from the deck
+def get_one():
+    print(char_deck.pop())
+    random.shuffle(char_deck)
+
+# pops two characters from the deck
+def get_two():
+    print(char_deck.pop(), char_deck.pop())
+    random.shuffle(char_deck)
+
+# now need to add characters back to the deck
+def add_char(*args):
+    for x in args:
+        char_deck.append(x)
+    random.shuffle(char_deck)
+
 p1 = Player('Alan')
+p2 = Player('Colin')
 players.append(p1)
-stats()
+players.append(p2)
