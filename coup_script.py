@@ -161,26 +161,16 @@ def command_verified(cmd_tokens, players=None):
 
 
 def function_signature(cmd):
-    if cmd == "help":
-        return "help"
-    elif cmd == "stats":
-        return "stats"
-    elif cmd == "stats_mod":
-        return "stats_mod"
+    if cmd in ["help", "stats", "stats_mod", "get_two"]:
+        return cmd
     elif cmd == "init":
         return "init [player1] [player2] [...] [playern]"
-    elif cmd == "add":
-        return "add [player] [number]"
-    elif cmd == "remove":
-        return "remove [player] [number]"
+    elif cmd == "add" or cmd == "remove":
+        return cmd + " [player] [number]"
     elif cmd == "exchange":
         return "exchange [player] [card1] [optional, card2]"
-    elif cmd == "replace":
-        return "replace [player] [card]"
-    elif cmd == "kill":
-        return "kill [player] [card]"
-    elif cmd == "get_two":
-        return "get_two"
+    elif cmd == "replace" or cmd == "kill":
+        return cmd + " [player] [card]"
     else:
         return "not found"
 
