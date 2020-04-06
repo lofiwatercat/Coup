@@ -61,22 +61,24 @@ def stats_mod():
     print('Number of characters in deck:', len(char_deck))
     for x in order_of_players:
         print()
-        x.player_stats()
+        players[x].player_stats()
 
 # shows the names of the players and their coins
 def stats():
     for x in order_of_players:
         print()
-        print(x.name)
-        print(x.coins, 'coins')
-        if len(x.revealed) != 0:
-            print(x.revealed)
+        print(x)
+        print(players[x].coins, 'coins')
+        if len(players[x].revealed) != 0:
+            print(players[x].revealed)
 
 # initalizes the players
 def init(*args):
     for x in args:
         players[x] = Player(x)
-        order_of_players.append(Player(x))
+        order_of_players.append(x)
+        global treasury
+        treasury = treasury - 2
 
 # pops a character from the deck
 def get_one():
@@ -106,8 +108,10 @@ def kill(Player, str):
 
 init('Alan', 'Colin', 'Wilson') 
 players['Alan'].player_stats()
-stats_mod()
+kill(players['Alan'], 'Assassin')
+stats()
 print()
+stats_mod()
 
 
 # utility functions
