@@ -9,9 +9,6 @@ char_deck = ['Duke', 'Assassin', 'Ambassador', 'Captain', 'Contessa'] * 3
 
 random.shuffle(char_deck)
 
-# making the treasury
-treasury = 50
-
 # Making a class for the players
 
 class Player:
@@ -50,7 +47,6 @@ def help_actions():
 
 # making some methods to view the stats
 def stats_mod():
-    print('Treasury:', treasury)
     print('Number of characters in deck:', len(char_deck))
     for x in order_of_players:
         print()
@@ -67,21 +63,20 @@ def stats():
 
 # adds coins to a player
 def add(Player, int):
-    if treasury > 0:
-        Player.coins = Player.coins + int
+    Player.coins = Player.coins + int
 
 # removes coins from a player
 def remove(Player, int):
     if Player.coins >= int:
         Player.coins = Player.coins - int
+    else:
+        Player.coins = 0
 
 # initalizes the players
 def init(*args):
     for x in args:
         players[x] = Player(x)
         order_of_players.append(x)
-        global treasury
-        treasury = treasury - 2
 
 # shows two characters from the deck (read-only)
 def get_two():
