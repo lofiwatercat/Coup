@@ -104,6 +104,13 @@ def add_char(*args):
         char_deck.append(x.capitalize())
     random.shuffle(char_deck)
 
+# if abused by mod, this doesn't stop the mod from reviving a dead player by
+# exchanging two cards with new cards, or restoring a card to a player by
+# exchanging two cards with new cards when a player only has 1 left.
+# input validation has not yet been made for if the mod grants a player
+# cards that are not available in the deck; this behavior may break the system
+# finally, exchanging 1 card when a player has 2 cards will swap the first card
+# with the new card, do not do this
 def exchange(player, card1, card2=None):
     card1 = card1.capitalize()
 
