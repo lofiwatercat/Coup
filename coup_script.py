@@ -6,7 +6,6 @@ import copy
 # Making a list of the character cards
 
 char_deck = ['Duke', 'Assassin', 'Ambassador', 'Captain', 'Contessa'] * 3
-
 random.shuffle(char_deck)
 
 # Making a class for the players
@@ -75,9 +74,11 @@ def remove(Player, int):
 
 # initalizes the players
 def init(player_list):
-    global players, order_of_players
+    global players, order_of_players, char_deck
     players = {}
     order_of_players = []
+    char_deck = ['Duke', 'Assassin', 'Ambassador', 'Captain', 'Contessa'] * 3
+    random.shuffle(char_deck)
 
     print("Initialized: ", end='')
     for x in player_list:
@@ -88,7 +89,7 @@ def init(player_list):
 
 # shows two characters from the deck (read-only)
 def get_two():
-    print(char_deck[-1], char_deck[-2])
+    print(char_deck[-1], char_deck[-2] + '\n')
     random.shuffle(char_deck)
 
 # now need to add characters back to the deck
