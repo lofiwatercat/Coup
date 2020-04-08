@@ -54,6 +54,7 @@ def stats_mod():
 
 # shows the names of the players and their coins
 def stats():
+    print(order_of_players)
     for x in order_of_players:
         print()
         print(x)
@@ -73,13 +74,16 @@ def remove(Player, int):
         Player.coins = 0
 
 # initalizes the players
-def init(*args):
+def init(player_list):
     players = {}
     order_of_players = []
 
-    for x in args:
+    for x in player_list:
+        print(x)
         players[x] = Player(x)
         order_of_players.append(x)
+    print(players)
+    print(order_of_players)
 
 # shows two characters from the deck (read-only)
 def get_two():
@@ -204,26 +208,16 @@ def command_verified(cmd_tokens, players):
 
 
 def function_signature(cmd):
-    if cmd == "help":
-        return "help"
-    elif cmd == "stats":
-        return "stats"
-    elif cmd == "stats_mod":
-        return "stats_mod"
+    if cmd in ["help", "stats", "stats_mod", "get_two"]:
+        return cmd
     elif cmd == "init":
         return "init [player1] [player2] [...] [playern]"
-    elif cmd == "add":
-        return "add [player] [number]"
-    elif cmd == "remove":
-        return "remove [player] [number]"
+    elif cmd in ["add", "remove"]:
+        return cmd + " [player] [number]"
     elif cmd == "exchange":
         return "exchange [player] [card1] [optional, card2]"
-    elif cmd == "replace":
-        return "replace [player] [card]"
-    elif cmd == "kill":
-        return "kill [player] [card]"
-    elif cmd == "get_two":
-        return "get_two"
+    elif cmd in ["replace", "kill"]:
+        return cmd + " [player] [card]"
     else:
         return "not found"
 
@@ -233,31 +227,32 @@ while True:
 
     invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens, players)
     while invalid_input:
-        if len(cmd_tokens < 1):
-            cmd_tokens = input("Empty command entered, please try again. Enter command: ").split()
+        if len(cmd_tokens) < 1:
+            cmd_tokens = input("\nEmpty command entered, please try again.\nEnter command: ").split()
         elif function_signature(cmd_tokens[0]) == "not found":
-            cmd_tokens = input("Command not found, please try again. Enter command: ").split()
+            cmd_tokens = input("\nCommand not found, please try again.\nEnter command: ").split()
         else:
-            print("Incorrect command arguments. Function signature of " + str(cmd_tokens[0]) + " is: ")
+            print("\nIncorrect command arguments. Function signature of " + str(cmd_tokens[0]) + " is: ")
             print(function_signature(cmd_tokens[0]))
-            print("Check that you have initialized players, that the player and card names are matching \nand that number arguments can be converted to integers.")
+            print("\nCheck that you have initialized players, that the player and card names are matching \nand that number arguments can be converted to integers.\n")
 
             cmd_tokens = input("Enter command: ")
 
         invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens, players)
  
 
-    # call functions here, now that they're verified to be correct
-    '''
+    # call functions here, now that they're verified to be correct:
     cmd = cmd_tokens[0]
     if cmd == "help":
-        
+        help()
     elif cmd == "stats":
-        asdf
+        stats()
+    elif cmd == "stats_mod":
+        stats_mod()
+    elif cmd == "get_two":
+        get_two()
     elif cmd == "init":
-        asdf
-    else:
-    '''
+        init(cmd_tokens[1:])
 
 
 
