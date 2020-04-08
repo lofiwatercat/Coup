@@ -19,10 +19,10 @@ class Player:
     
     # method to get player stats
     def player_stats(self):
-        print(self.name)
+        print(self.name.capitalize())
         for x in self.cards:
-            print(x)
-        print('coins:', self.coins)
+            print(str(x[0]) + ": " + x[1])
+        print('Coins:', self.coins)
 
 # making a list of the players
 players = {}
@@ -46,17 +46,18 @@ def help_actions():
 
 # making some methods to view the stats
 def stats_mod():
-    print('Number of characters in deck:', len(char_deck))
+    print('\nNumber of characters in deck:', len(char_deck))
     for x in order_of_players:
         print()
         players[x].player_stats()
+    print()
 
 # shows the names of the players and their coins
 def stats():
     for x in order_of_players:
         print()
         print(x.capitalize())
-        print(players[x].coins, 'coins')
+        print("Coins:", players[x].coins)
         if len(players[x].revealed) != 0:
             print(players[x].revealed)
     print()
@@ -83,8 +84,8 @@ def init(player_list):
     print("Initialized: ", end='')
     for x in player_list:
         print(x.capitalize(), end=' ')
-        players[x] = Player(x)
-        order_of_players.append(x)
+        players[x.capitalize()] = Player(x.capitalize())
+        order_of_players.append(x.capitalize())
     print('\n')
 
 # shows two characters from the deck (read-only)
@@ -165,6 +166,13 @@ stats()
 
 # utility functions
 
+# non-case sensitive comparison
+def str_in_list(s, str_list):
+    for elem in str_list:
+        if s.lower() == elem.lower():
+            return True
+    return False
+
 '''
 Checks the following:
     - [Number] arguments can be cast properly to ints
@@ -177,11 +185,11 @@ def command_verified(cmd_tokens, players):
     if len(cmd_tokens) < 1:
         return False
     
-    cards = ['duke', 'assassin', 'captain', 'ambassador', 'captain', 'contessa']
+    cards = ['Duke', 'Assassin', 'Captain', 'Ambassador', 'Contessa']
     cmd = cmd_tokens[0]
 
-    if cmd in ["help", "stats", "stats_mod", "get_two"]:
-        return True
+    if cmd in ["help", "help_rules", "help_actions", "stats", "stats_mod", "get_two"]:
+        return len(cmd_tokens) == 1
     elif cmd == "init":
         return len(cmd_tokens) >= 4 and len(cmd_tokens) <= 7 # allow 3 to 6 players, plus the "init" token in the command
    
@@ -190,19 +198,25 @@ def command_verified(cmd_tokens, players):
         if cmd == "add" or cmd == "remove":
             # verifies that the number argument is castable
             try:
-                int(cmd[2])
-                return len(cmd_tokens) == 3 and cmd[1] in players.keys() 
+                int(cmd_tokens[2])
+                return len(cmd_tokens) == 3 and str_in_list(cmd_tokens[1], players.keys()) 
             except ValueError:
                 return False
         elif cmd == "exchange":
             if len(cmd_tokens) == 3:
-                return cmd[1] in players.keys() and cmd[2] in cards
+                return str_in_list(cmd_tokens[1], players.keys()) and str_in_list(cmd_tokens[2], cards)
             elif len(cmd_tokens) == 4:
-                return cmd[1] in players.keys() and cmd[2] in cards and cmd[3] in cards
+                return str_in_list(cmd_tokens[1], players.keys()) and str_in_list(cmd_tokens[2], cards) and str_in_list(cmd_tokens[3], cards)
             else:
                 return False
         elif cmd == "replace" or cmd == "kill":
-            return len(cmd_tokens) == 3 and cmd[2] in cards and cmd[1] in players.keys()
+            print("hi")
+            print(cmd)
+            print(cmd_tokens[2])
+            print(cmd_tokens[1])
+            print(cards)
+            print(players.keys())
+            return len(cmd_tokens) == 3 and str_in_list(cmd_tokens[2], cards) and str_in_list(cmd_tokens[1], players.keys()) 
         else:
             return False
     else:
@@ -210,7 +224,7 @@ def command_verified(cmd_tokens, players):
 
 
 def function_signature(cmd):
-    if cmd in ["help", "stats", "stats_mod", "get_two"]:
+    if cmd in ["help", "help_rules", "help_actions", "stats", "stats_mod", "get_two"]:
         return cmd
     elif cmd == "init":
         return "init [player1] [player2] [...] [playern]"
@@ -230,15 +244,15 @@ while True:
     invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens, players)
     while invalid_input:
         if len(cmd_tokens) < 1:
-            cmd_tokens = input("\nEmpty command entered, please try again.\nEnter command: ").split()
+            cmd_tokens = input("\nEmpty command entered, please try again.\nEnter command: ").lower().split()
         elif function_signature(cmd_tokens[0]) == "not found":
-            cmd_tokens = input("\nCommand not found, please try again.\nEnter command: ").split()
+            cmd_tokens = input("\nCommand not found, please try again.\nEnter command: ").lower().split()
         else:
             print("\nIncorrect command arguments. Function signature of " + str(cmd_tokens[0]) + " is: ")
             print(function_signature(cmd_tokens[0]))
             print("\nCheck that you have initialized players, that the player and card names are matching \nand that number arguments can be converted to integers.\n")
 
-            cmd_tokens = input("Enter command: ")
+            cmd_tokens = input("Enter command: ").lower().split()
 
         invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens, players)
  
@@ -247,6 +261,10 @@ while True:
     cmd = cmd_tokens[0]
     if cmd == "help":
         help()
+    elif cmd == "help_rules":
+        help_rules()
+    elif cmd == "help_actions":
+        help_actions()
     elif cmd == "stats":
         stats()
     elif cmd == "stats_mod":
@@ -255,6 +273,17 @@ while True:
         get_two()
     elif cmd == "init":
         init(cmd_tokens[1:])
-
-
+    elif cmd == "add":
+        add(cmd_tokens[1], cmd_tokens[2])
+    elif cmd == "remove":
+        remove(cmd_tokens[1], cmd_tokens[2])
+    elif cmd == "exchange":
+        if len(cmd_tokens) == 4:
+            exchange(cmd_tokens[1], cmd_tokens[2], cmd_tokens[3])
+        elif len(cmd_tokens) == 3:
+            exchange(cmd_tokens[1], cmd_tokens[2])
+    elif cmd == "replace":
+        replace(cmd_tokens[1], cmd_tokens[2])
+    elif cmd == "kill":
+        kill(cmd_tokens[1], cmd_tokens[2])
 
