@@ -1,6 +1,7 @@
 # This is the script for the card game Coup
 
 import random
+import copy
 
 # Making a list of the character cards
 
@@ -80,20 +81,44 @@ def init(*args):
         global treasury
         treasury = treasury - 2
 
-# pops a character from the deck
-def get_one():
-    print(char_deck.pop())
-    random.shuffle(char_deck)
-
-# pops two characters from the deck
+# shows two characters from the deck (read-only)
 def get_two():
-    print(char_deck.pop(), char_deck.pop())
+    print(char_deck[-1], char_deck[-2])
     random.shuffle(char_deck)
 
 # now need to add characters back to the deck
 def add_char(*args):
     for x in args:
         char_deck.append(x)
+    random.shuffle(char_deck)
+
+def exchange(player, card1, card2=None):
+    card1 = card1.capitalize()
+
+    if card2 == None: # there is one hidden card
+        for i, card in enumerate(player.cards): # card[0] is the name of the card, card[1] is the state (hidden or revealed)
+            if card[1] == 'hidden':
+                # return card to deck
+                char_deck.append(card[0])
+
+                # add card1 to player
+                player.cards[i][0] = card1
+
+                # remove card1 from deck
+                char_deck.remove(card1)
+
+    else: # if you are replacing with 2 cards, both cards held by the player are hidden (replace both)
+        card2 = card2.capitalize()
+
+        char_deck.append(player.cards[0][0])
+        char_deck.append(player.cards[1][0])
+
+        player.cards[0][0] = card1
+        player.cards[1][0] = card2
+
+        char_deck.remove(card1)
+        char_deck.remove(card2)
+
     random.shuffle(char_deck)
 
 # reveals a character card
@@ -103,6 +128,7 @@ def kill(Player, str):
         if x[0] == str and x[1] == 'hidden':
             x[1] = 'revealed'
             Player.revealed.append(x[0])
+
 
 ############# END OF MOD ACTIONS #############
 
