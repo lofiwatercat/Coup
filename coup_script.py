@@ -27,14 +27,6 @@ class Player:
             print(x)
         print('coins:', self.coins)
 
-    # method to add coins
-    def add(self, number):
-        self.coins = self.coins + number 
-
-    # method to remove coins
-    def remove(self, number):
-        self.coins = self.coins - number
-
 # making a list of the players
 players = {}
 
@@ -72,6 +64,16 @@ def stats():
         if len(players[x].revealed) != 0:
             print(players[x].revealed)
 
+# adds coins to a player
+def add(Player, int):
+    if treasury > 0:
+        Player.coins = Player.coins + int
+
+# removes coins from a player
+def remove(Player, int):
+    if Player.coins >= int:
+        Player.coins = Player.coins - int
+
 # initalizes the players
 def init(*args):
     for x in args:
@@ -103,6 +105,7 @@ def kill(Player, str):
         if x[0] == str and x[1] == 'hidden':
             x[1] = 'revealed'
             Player.revealed.append(x[0])
+            break
 
 # replaces the player's character card with a random card from the deck
 def replace(Player, str):
@@ -112,6 +115,7 @@ def replace(Player, str):
             x[0] = char_deck.pop()
             char_deck.append(str)
             break
+    random.shuffle(char_deck)
 
 ############# END OF MOD ACTIONS #############
 
@@ -121,9 +125,9 @@ kill(players['Alan'], 'Assassin')
 stats()
 replace(players['Alan'], 'Duke')
 players['Alan'].player_stats()
-print()
-
-
+remove(players['Alan'], 2)
+players['Alan'].player_stats()
+stats()
 # utility functions
 
 '''
