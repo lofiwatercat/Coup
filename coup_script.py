@@ -74,6 +74,9 @@ def remove(Player, int):
 
 # initalizes the players
 def init(*args):
+    players = {}
+    order_of_players = []
+
     for x in args:
         players[x] = Player(x)
         order_of_players.append(x)
@@ -140,6 +143,8 @@ def replace(Player, str):
 
 ############# END OF MOD ACTIONS #############
 
+# testing
+'''
 init('Alan', 'Colin', 'Wilson') 
 players['Alan'].player_stats()
 kill(players['Alan'], 'Assassin')
@@ -149,6 +154,9 @@ players['Alan'].player_stats()
 remove(players['Alan'], 2)
 players['Alan'].player_stats()
 stats()
+'''
+
+
 # utility functions
 
 '''
@@ -159,7 +167,7 @@ Checks the following:
     - [Card] arguments are valid
 '''
 
-def command_verified(cmd_tokens, players=None):
+def command_verified(cmd_tokens, players):
     if len(cmd_tokens) < 1:
         return False
     
@@ -172,7 +180,7 @@ def command_verified(cmd_tokens, players=None):
         return len(cmd_tokens) >= 4 and len(cmd_tokens) <= 7 # allow 3 to 6 players, plus the "init" token in the command
    
     # require that players is initialized by init before running player-specific commands (add, remove, etc.)
-    if type(players) is dict:
+    if len(players) > 0:
         if cmd == "add" or cmd == "remove":
             # verifies that the number argument is castable
             try:
@@ -223,7 +231,7 @@ def function_signature(cmd):
 while True:
     cmd_tokens = input("Enter command: ").lower().split()
 
-    invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens)
+    invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens, players)
     while invalid_input:
         if len(cmd_tokens < 1):
             cmd_tokens = input("Empty command entered, please try again. Enter command: ").split()
@@ -236,7 +244,7 @@ while True:
 
             cmd_tokens = input("Enter command: ")
 
-        invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens)
+        invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens, players)
  
 
     # call functions here, now that they're verified to be correct
