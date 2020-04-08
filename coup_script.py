@@ -82,20 +82,14 @@ def init(*args):
         global treasury
         treasury = treasury - 2
 
-# pops a character from the deck
-def get_one():
-    print(char_deck.pop())
-    random.shuffle(char_deck)
-
-# pops two characters from the deck
+# reads the last two characters from the deck
 def get_two():
     print(char_deck.pop(), char_deck.pop())
-    random.shuffle(char_deck)
-
+    
 # now need to add characters back to the deck
 def add_char(*args):
     for x in args:
-        char_deck.append(x)
+        char_deck.append(x.capitalize())
     random.shuffle(char_deck)
 
 # reveals a character card
