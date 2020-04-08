@@ -59,17 +59,22 @@ def stats():
         print(x)
         print("Coins:", players[x].coins)
         if len(players[x].revealed) != 0:
-            print(players[x].revealed)
+            print("Revealed: ", end="")
+            for elem in players[x].revealed:
+                print(elem, end=" ")
+            print()
     print()
 
 # adds coins to a player
-def add(player, int):
-    player.coins = player.coins + int
+def add(player, coins):
+    coins = int(coins)
+    player.coins = player.coins + coins
 
 # removes coins from a player
-def remove(player, int):
-    if player.coins >= int:
-        player.coins = player.coins - int
+def remove(player, coins):
+    coins = int(coins)
+    if player.coins >= coins:
+        player.coins = player.coins - coins
     else:
         player.coins = 0
 
