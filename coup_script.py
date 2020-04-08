@@ -19,7 +19,7 @@ class Player:
     
     # method to get player stats
     def player_stats(self):
-        print(self.name.capitalize())
+        print(self.name)
         for x in self.cards:
             print(str(x[0]) + ": " + x[1])
         print('Coins:', self.coins)
@@ -56,22 +56,22 @@ def stats_mod():
 def stats():
     for x in order_of_players:
         print()
-        print(x.capitalize())
+        print(x)
         print("Coins:", players[x].coins)
         if len(players[x].revealed) != 0:
             print(players[x].revealed)
     print()
 
 # adds coins to a player
-def add(Player, int):
-    Player.coins = Player.coins + int
+def add(player, int):
+    player.coins = player.coins + int
 
 # removes coins from a player
-def remove(Player, int):
-    if Player.coins >= int:
-        Player.coins = Player.coins - int
+def remove(player, int):
+    if player.coins >= int:
+        player.coins = player.coins - int
     else:
-        Player.coins = 0
+        player.coins = 0
 
 # initalizes the players
 def init(player_list):
@@ -83,9 +83,9 @@ def init(player_list):
 
     print("Initialized: ", end='')
     for x in player_list:
-        print(x.capitalize(), end=' ')
-        players[x.capitalize()] = Player(x.capitalize())
-        order_of_players.append(x.capitalize())
+        print(x, end=' ')
+        players[x] = Player(x)
+        order_of_players.append(x)
     print('\n')
 
 # shows two characters from the deck (read-only)
@@ -129,18 +129,18 @@ def exchange(player, card1, card2=None):
     random.shuffle(char_deck)
 
 # reveals a character card
-def kill(Player, str):
+def kill(player, str):
     str = str.capitalize()
-    for x in Player.cards:
+    for x in player.cards:
         if x[0] == str and x[1] == 'hidden':
             x[1] = 'revealed'
-            Player.revealed.append(x[0])
+            player.revealed.append(x[0])
             break
 
 # replaces the player's character card with a random card from the deck
-def replace(Player, str):
+def replace(player, str):
     str = str.capitalize()
-    for x in Player.cards:
+    for x in player.cards:
         if x[0] == str and x[1] == 'hidden':
             x[0] = char_deck.pop()
             char_deck.append(str)
@@ -204,19 +204,13 @@ def command_verified(cmd_tokens, players):
                 return False
         elif cmd == "exchange":
             if len(cmd_tokens) == 3:
-                return str_in_list(cmd_tokens[1], players.keys()) and str_in_list(cmd_tokens[2], cards)
+                return cmd_tokens[1] in players.keys() and str_in_list(cmd_tokens[2], cards)
             elif len(cmd_tokens) == 4:
-                return str_in_list(cmd_tokens[1], players.keys()) and str_in_list(cmd_tokens[2], cards) and str_in_list(cmd_tokens[3], cards)
+                return cmd_tokens[1] in players.keys() and str_in_list(cmd_tokens[2], cards) and str_in_list(cmd_tokens[3], cards)
             else:
                 return False
         elif cmd == "replace" or cmd == "kill":
-            print("hi")
-            print(cmd)
-            print(cmd_tokens[2])
-            print(cmd_tokens[1])
-            print(cards)
-            print(players.keys())
-            return len(cmd_tokens) == 3 and str_in_list(cmd_tokens[2], cards) and str_in_list(cmd_tokens[1], players.keys()) 
+            return len(cmd_tokens) == 3 and str_in_list(cmd_tokens[2], cards) and cmd_tokens[1] in players.keys() 
         else:
             return False
     else:
@@ -274,16 +268,16 @@ while True:
     elif cmd == "init":
         init(cmd_tokens[1:])
     elif cmd == "add":
-        add(cmd_tokens[1], cmd_tokens[2])
+        add(players[cmd_tokens[1]], cmd_tokens[2])
     elif cmd == "remove":
-        remove(cmd_tokens[1], cmd_tokens[2])
+        remove(players[cmd_tokens[1]], cmd_tokens[2])
     elif cmd == "exchange":
         if len(cmd_tokens) == 4:
-            exchange(cmd_tokens[1], cmd_tokens[2], cmd_tokens[3])
+            exchange(players[cmd_tokens[1]], cmd_tokens[2], cmd_tokens[3])
         elif len(cmd_tokens) == 3:
-            exchange(cmd_tokens[1], cmd_tokens[2])
+            exchange(players[cmd_tokens[1]], cmd_tokens[2])
     elif cmd == "replace":
-        replace(cmd_tokens[1], cmd_tokens[2])
+        replace(players[cmd_tokens[1]], cmd_tokens[2])
     elif cmd == "kill":
-        kill(cmd_tokens[1], cmd_tokens[2])
+        kill(players[cmd_tokens[1]], cmd_tokens[2])
 
