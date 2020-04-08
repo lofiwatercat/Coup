@@ -54,13 +54,13 @@ def stats_mod():
 
 # shows the names of the players and their coins
 def stats():
-    print(order_of_players)
     for x in order_of_players:
         print()
-        print(x)
+        print(x.capitalize())
         print(players[x].coins, 'coins')
         if len(players[x].revealed) != 0:
             print(players[x].revealed)
+    print()
 
 # adds coins to a player
 def add(Player, int):
@@ -75,15 +75,16 @@ def remove(Player, int):
 
 # initalizes the players
 def init(player_list):
+    global players, order_of_players
     players = {}
     order_of_players = []
 
+    print("Initialized: ", end='')
     for x in player_list:
-        print(x)
+        print(x.capitalize(), end=' ')
         players[x] = Player(x)
         order_of_players.append(x)
-    print(players)
-    print(order_of_players)
+    print('\n')
 
 # shows two characters from the deck (read-only)
 def get_two():
