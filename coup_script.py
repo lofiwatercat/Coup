@@ -199,7 +199,7 @@ def command_verified(cmd_tokens, players):
             # verifies that the number argument is castable
             try:
                 int(cmd_tokens[2])
-                return len(cmd_tokens) == 3 and str_in_list(cmd_tokens[1], players.keys()) 
+                return len(cmd_tokens) == 3 and cmd_tokens[1] in players.keys() 
             except ValueError:
                 return False
         elif cmd == "exchange":
