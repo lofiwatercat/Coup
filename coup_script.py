@@ -6,7 +6,6 @@ import copy
 # Making a list of the character cards
 
 char_deck = ['Duke', 'Assassin', 'Ambassador', 'Captain', 'Contessa'] * 3
-
 random.shuffle(char_deck)
 
 # Making a class for the players
@@ -22,8 +21,8 @@ class Player:
     def player_stats(self):
         print(self.name)
         for x in self.cards:
-            print(x)
-        print('coins:', self.coins)
+            print(str(x[0]) + ": " + x[1])
+        print('Coins:', self.coins)
 
 # making a list of the players
 players = {}
@@ -47,40 +46,56 @@ def help_actions():
 
 # making some methods to view the stats
 def stats_mod():
-    print('Number of characters in deck:', len(char_deck))
+    print('\nNumber of characters in deck:', len(char_deck))
     for x in order_of_players:
         print()
         players[x].player_stats()
+    print()
 
 # shows the names of the players and their coins
 def stats():
     for x in order_of_players:
         print()
         print(x)
-        print(players[x].coins, 'coins')
+        print("Coins:", players[x].coins)
         if len(players[x].revealed) != 0:
-            print(players[x].revealed)
+            print("Revealed: ", end="")
+            for elem in players[x].revealed:
+                print(elem, end=" ")
+            print()
+    print()
 
 # adds coins to a player
-def add(Player, int):
-    Player.coins = Player.coins + int
+def add(player, coins):
+    coins = int(coins)
+    player.coins = player.coins + coins
 
 # removes coins from a player
-def remove(Player, int):
-    if Player.coins >= int:
-        Player.coins = Player.coins - int
+def remove(player, coins):
+    coins = int(coins)
+    if player.coins >= coins:
+        player.coins = player.coins - coins
     else:
-        Player.coins = 0
+        player.coins = 0
 
 # initalizes the players
-def init(*args):
-    for x in args:
+def init(player_list):
+    global players, order_of_players, char_deck
+    players = {}
+    order_of_players = []
+    char_deck = ['Duke', 'Assassin', 'Ambassador', 'Captain', 'Contessa'] * 3
+    random.shuffle(char_deck)
+
+    print("Initialized: ", end='')
+    for x in player_list:
+        print(x, end=' ')
         players[x] = Player(x)
         order_of_players.append(x)
+    print('\n')
 
 # shows two characters from the deck (read-only)
 def get_two():
-    print(char_deck[-1], char_deck[-2])
+    print(char_deck[-1], char_deck[-2] + '\n')
     random.shuffle(char_deck)
 
 # now need to add characters back to the deck
@@ -89,6 +104,13 @@ def add_char(*args):
         char_deck.append(x.capitalize())
     random.shuffle(char_deck)
 
+# if abused by mod, this doesn't stop the mod from reviving a dead player by
+# exchanging two cards with new cards, or restoring a card to a player by
+# exchanging two cards with new cards when a player only has 1 left.
+# input validation has not yet been made for if the mod grants a player
+# cards that are not available in the deck; this behavior may break the system
+# finally, exchanging 1 card when a player has 2 cards will swap the first card
+# with the new card, do not do this
 def exchange(player, card1, card2=None):
     card1 = card1.capitalize()
 
@@ -119,18 +141,18 @@ def exchange(player, card1, card2=None):
     random.shuffle(char_deck)
 
 # reveals a character card
-def kill(Player, str):
+def kill(player, str):
     str = str.capitalize()
-    for x in Player.cards:
+    for x in player.cards:
         if x[0] == str and x[1] == 'hidden':
             x[1] = 'revealed'
-            Player.revealed.append(x[0])
+            player.revealed.append(x[0])
             break
 
 # replaces the player's character card with a random card from the deck
-def replace(Player, str):
+def replace(player, str):
     str = str.capitalize()
-    for x in Player.cards:
+    for x in player.cards:
         if x[0] == str and x[1] == 'hidden':
             x[0] = char_deck.pop()
             char_deck.append(str)
@@ -140,7 +162,29 @@ def replace(Player, str):
 
 ############# END OF MOD ACTIONS #############
 
+=======
+# testing
+'''
+init('Alan', 'Colin', 'Wilson') 
+players['Alan'].player_stats()
+kill(players['Alan'], 'Assassin')
+stats()
+replace(players['Alan'], 'Duke')
+players['Alan'].player_stats()
+remove(players['Alan'], 2)
+players['Alan'].player_stats()
+stats()
+'''
+
+
 # utility functions
+
+# non-case sensitive comparison
+def str_in_list(s, str_list):
+    for elem in str_list:
+        if s.lower() == elem.lower():
+            return True
+    return False
 
 '''
 Checks the following:
@@ -150,36 +194,36 @@ Checks the following:
     - [Card] arguments are valid
 '''
 
-def command_verified(cmd_tokens, players=None):
+def command_verified(cmd_tokens, players):
     if len(cmd_tokens) < 1:
         return False
     
-    cards = ['duke', 'assassin', 'captain', 'ambassador', 'captain', 'contessa']
+    cards = ['Duke', 'Assassin', 'Captain', 'Ambassador', 'Contessa']
     cmd = cmd_tokens[0]
 
-    if cmd in ["help", "stats", "stats_mod", "get_two"]:
-        return True
+    if cmd in ["help", "help_rules", "help_actions", "stats", "stats_mod", "get_two"]:
+        return len(cmd_tokens) == 1
     elif cmd == "init":
         return len(cmd_tokens) >= 4 and len(cmd_tokens) <= 7 # allow 3 to 6 players, plus the "init" token in the command
    
     # require that players is initialized by init before running player-specific commands (add, remove, etc.)
-    if type(players) is dict:
+    if len(players) > 0:
         if cmd == "add" or cmd == "remove":
             # verifies that the number argument is castable
             try:
-                int(cmd[2])
-                return len(cmd_tokens) == 3 and cmd[1] in players.keys() 
+                int(cmd_tokens[2])
+                return len(cmd_tokens) == 3 and cmd_tokens[1] in players.keys() 
             except ValueError:
                 return False
         elif cmd == "exchange":
             if len(cmd_tokens) == 3:
-                return cmd[1] in players.keys() and cmd[2] in cards
+                return cmd_tokens[1] in players.keys() and str_in_list(cmd_tokens[2], cards)
             elif len(cmd_tokens) == 4:
-                return cmd[1] in players.keys() and cmd[2] in cards and cmd[3] in cards
+                return cmd_tokens[1] in players.keys() and str_in_list(cmd_tokens[2], cards) and str_in_list(cmd_tokens[3], cards)
             else:
                 return False
         elif cmd == "replace" or cmd == "kill":
-            return len(cmd_tokens) == 3 and cmd[2] in cards and cmd[1] in players.keys()
+            return len(cmd_tokens) == 3 and str_in_list(cmd_tokens[2], cards) and cmd_tokens[1] in players.keys() 
         else:
             return False
     else:
@@ -187,26 +231,16 @@ def command_verified(cmd_tokens, players=None):
 
 
 def function_signature(cmd):
-    if cmd == "help":
-        return "help"
-    elif cmd == "stats":
-        return "stats"
-    elif cmd == "stats_mod":
-        return "stats_mod"
+    if cmd in ["help", "help_rules", "help_actions", "stats", "stats_mod", "get_two"]:
+        return cmd
     elif cmd == "init":
         return "init [player1] [player2] [...] [playern]"
-    elif cmd == "add":
-        return "add [player] [number]"
-    elif cmd == "remove":
-        return "remove [player] [number]"
+    elif cmd in ["add", "remove"]:
+        return cmd + " [player] [number]"
     elif cmd == "exchange":
         return "exchange [player] [card1] [optional, card2]"
-    elif cmd == "replace":
-        return "replace [player] [card]"
-    elif cmd == "kill":
-        return "kill [player] [card]"
-    elif cmd == "get_two":
-        return "get_two"
+    elif cmd in ["replace", "kill"]:
+        return cmd + " [player] [card]"
     else:
         return "not found"
 
@@ -214,20 +248,22 @@ def function_signature(cmd):
 while True:
     cmd_tokens = input("Enter command: ").lower().split()
 
-    invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens)
+    invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens, players)
     while invalid_input:
         if len(cmd_tokens) < 1:
             cmd_tokens = input("Empty command entered, please try again. Enter command: ").split()
+=======
+            cmd_tokens = input("\nEmpty command entered, please try again.\nEnter command: ").lower().split()
         elif function_signature(cmd_tokens[0]) == "not found":
-            cmd_tokens = input("Command not found, please try again. Enter command: ").split()
+            cmd_tokens = input("\nCommand not found, please try again.\nEnter command: ").lower().split()
         else:
-            print("Incorrect command arguments. Function signature of " + str(cmd_tokens[0]) + " is: ")
+            print("\nIncorrect command arguments. Function signature of " + str(cmd_tokens[0]) + " is: ")
             print(function_signature(cmd_tokens[0]))
-            print("Check that you have initialized players, that the player and card names are matching \nand that number arguments can be converted to integers.")
+            print("\nCheck that you have initialized players, that the player and card names are matching \nand that number arguments can be converted to integers.\n")
 
-            cmd_tokens = input("Enter command: ")
+            cmd_tokens = input("Enter command: ").lower().split()
 
-        invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens)
+        invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens, players)
  
 
     # call functions here, now that they're verified to be correct
@@ -244,4 +280,33 @@ while True:
     else:
         pass
 
+    # call functions here, now that they're verified to be correct:
+    cmd = cmd_tokens[0]
+    if cmd == "help":
+        help()
+    elif cmd == "help_rules":
+        help_rules()
+    elif cmd == "help_actions":
+        help_actions()
+    elif cmd == "stats":
+        stats()
+    elif cmd == "stats_mod":
+        stats_mod()
+    elif cmd == "get_two":
+        get_two()
+    elif cmd == "init":
+        init(cmd_tokens[1:])
+    elif cmd == "add":
+        add(players[cmd_tokens[1]], cmd_tokens[2])
+    elif cmd == "remove":
+        remove(players[cmd_tokens[1]], cmd_tokens[2])
+    elif cmd == "exchange":
+        if len(cmd_tokens) == 4:
+            exchange(players[cmd_tokens[1]], cmd_tokens[2], cmd_tokens[3])
+        elif len(cmd_tokens) == 3:
+            exchange(players[cmd_tokens[1]], cmd_tokens[2])
+    elif cmd == "replace":
+        replace(players[cmd_tokens[1]], cmd_tokens[2])
+    elif cmd == "kill":
+        kill(players[cmd_tokens[1]], cmd_tokens[2])
 
