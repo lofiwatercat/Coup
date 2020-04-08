@@ -140,15 +140,6 @@ def replace(Player, str):
 
 ############# END OF MOD ACTIONS #############
 
-init('Alan', 'Colin', 'Wilson') 
-players['Alan'].player_stats()
-kill(players['Alan'], 'Assassin')
-stats()
-replace(players['Alan'], 'Duke')
-players['Alan'].player_stats()
-remove(players['Alan'], 2)
-players['Alan'].player_stats()
-stats()
 # utility functions
 
 '''
@@ -225,7 +216,7 @@ while True:
 
     invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens)
     while invalid_input:
-        if len(cmd_tokens < 1):
+        if len(cmd_tokens) < 1:
             cmd_tokens = input("Empty command entered, please try again. Enter command: ").split()
         elif function_signature(cmd_tokens[0]) == "not found":
             cmd_tokens = input("Command not found, please try again. Enter command: ").split()
@@ -240,16 +231,17 @@ while True:
  
 
     # call functions here, now that they're verified to be correct
-    '''
     cmd = cmd_tokens[0]
     if cmd == "help":
-        
+        pass    
     elif cmd == "stats":
-        asdf
+        stats() 
+    elif cmd == "stats_mod":
+        stats_mod()
     elif cmd == "init":
-        asdf
+        for i in range(len(cmd_tokens) - 1):
+            init([cmd_tokens(i + 1)])
     else:
-    '''
-
+        pass
 
 
