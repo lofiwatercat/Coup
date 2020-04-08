@@ -28,14 +28,6 @@ class Player:
             print(x)
         print('coins:', self.coins)
 
-    # method to add coins
-    def add(self, number):
-        self.coins = self.coins + number 
-
-    # method to remove coins
-    def remove(self, number):
-        self.coins = self.coins - number
-
 # making a list of the players
 players = {}
 
@@ -72,6 +64,16 @@ def stats():
         print(players[x].coins, 'coins')
         if len(players[x].revealed) != 0:
             print(players[x].revealed)
+
+# adds coins to a player
+def add(Player, int):
+    if treasury > 0:
+        Player.coins = Player.coins + int
+
+# removes coins from a player
+def remove(Player, int):
+    if Player.coins >= int:
+        Player.coins = Player.coins - int
 
 # initalizes the players
 def init(*args):
@@ -128,6 +130,17 @@ def kill(Player, str):
         if x[0] == str and x[1] == 'hidden':
             x[1] = 'revealed'
             Player.revealed.append(x[0])
+            break
+
+# replaces the player's character card with a random card from the deck
+def replace(Player, str):
+    str = str.capitalize()
+    for x in Player.cards:
+        if x[0] == str and x[1] == 'hidden':
+            x[0] = char_deck.pop()
+            char_deck.append(str)
+            break
+    random.shuffle(char_deck)
 
 
 ############# END OF MOD ACTIONS #############
@@ -136,10 +149,11 @@ init('Alan', 'Colin', 'Wilson')
 players['Alan'].player_stats()
 kill(players['Alan'], 'Assassin')
 stats()
-print()
-stats_mod()
-
-
+replace(players['Alan'], 'Duke')
+players['Alan'].player_stats()
+remove(players['Alan'], 2)
+players['Alan'].player_stats()
+stats()
 # utility functions
 
 '''
@@ -187,16 +201,26 @@ def command_verified(cmd_tokens, players=None):
 
 
 def function_signature(cmd):
-    if cmd in ["help", "stats", "stats_mod", "get_two"]:
-        return cmd
+    if cmd == "help":
+        return "help"
+    elif cmd == "stats":
+        return "stats"
+    elif cmd == "stats_mod":
+        return "stats_mod"
     elif cmd == "init":
         return "init [player1] [player2] [...] [playern]"
-    elif cmd == "add" or cmd == "remove":
-        return cmd + " [player] [number]"
+    elif cmd == "add":
+        return "add [player] [number]"
+    elif cmd == "remove":
+        return "remove [player] [number]"
     elif cmd == "exchange":
         return "exchange [player] [card1] [optional, card2]"
-    elif cmd == "replace" or cmd == "kill":
-        return cmd + " [player] [card]"
+    elif cmd == "replace":
+        return "replace [player] [card]"
+    elif cmd == "kill":
+        return "kill [player] [card]"
+    elif cmd == "get_two":
+        return "get_two"
     else:
         return "not found"
 
