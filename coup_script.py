@@ -58,31 +58,18 @@ Actions:
        1. Shuffle all character cards and deal 2 to each player.
        2. Character cards are face down, but players can look at them at any time
        3. Give each player 2 coins
-    
-   Rules:
-   
-       Players have 2 influence represented by their face down character cards. If they lose an influence, they nee    d to reveal one of their face down cards. Once all influence is gone, they are exiled and out of the game.
-  
-   Gameplay:
-  
-      Game is played in turns.
-      The player must choose one action and cannot pass.
-      After the action, other players can either challenge or counteract that action, or else that action automati    cally succeed.
-      Once a player loses all their influence, they are exiled and out of the game. their cards remain face up and     their coins return to the treasury.
-  
-  Actions:
-  
+ 
       Some actions (Character Actions) require a specific character card. A player may tell the truth or bluff.
   
       General Actions:
 
-    General Actions:
         Income: Take 1 coin from the treasury.
         
         Foreign Aid: Take 2 coins from the treasury (can be blocked by Duke).
 
         Coup: Pay 7 coins to the Treasury and target another player. That player immediately loses an influence. If you start yoru turn with 10 or more coins, you are required to Coup.
     Character Cards and their Actions:
+
         Duke - Tax: Take 3 coins from the treasury.
         
         Assassin - Assassinate: Pay 3 coins to the treasury and assinate another player. If successful, the player loses an influence. (Can be blocked by Contessa)
@@ -163,21 +150,8 @@ Actions:
        1. Shuffle all character cards and deal 2 to each player.
        2. Character cards are face down, but players can look at them at any time
        3. Give each player 2 coins
-    
-   Rules:
-   
-       Players have 2 influence represented by their face down character cards. If they lose an influence, they nee    d to reveal one of their face down cards. Once all influence is gone, they are exiled and out of the game.
-  
-   Gameplay:
-  
-      Game is played in turns.
-      The player must choose one action and cannot pass.
-      After the action, other players can either challenge or counteract that action, or else that action automati    cally succeed.
-      Once a player loses all their influence, they are exiled and out of the game. their cards remain face up and     their coins return to the treasury.
-  
-  Actions:
-  
-      Some actions (Character Actions) require a specific character card. A player may tell the truth or bluff.
+
+     Some actions (Character Actions) require a specific character card. A player may tell the truth or bluff.
   
       General Actions:
 
@@ -188,6 +162,7 @@ Actions:
 
         Coup: Pay 7 coins to the Treasury and target another player. That player immediately loses an influence. If you start yoru turn with 10 or more coins, you are required to Coup.
     Character Cards and their Actions:
+
         Duke - Tax: Take 3 coins from the treasury.
         
         Assassin - Assassinate: Pay 3 coins to the treasury and assinate another player. If successful, the player loses an influence. (Can be blocked by Contessa)
