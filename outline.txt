@@ -24,7 +24,7 @@ Moderator actions:
     
     kill [player] [card] - marks card as revealed in internal game state, and prints notification for DM to copy-paste into public chat.
     
-    get_two - draw two cards from the character deck. Mod needs to dm the player the cards they drew. Usually used when a player uses their ambassador exchange.
+    get_two - prints two random cards from the deck. Usually used with exchange
            
 
 Hidden moderator actions:
