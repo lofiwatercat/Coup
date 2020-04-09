@@ -18,6 +18,26 @@ Rules:
 Actions:
 
     Some actions (Character Actions) require a specific character card. A player may tell the truth or bluff.
+       1. Shuffle all character cards and deal 2 to each player.
+       2. Character cards are face down, but players can look at them at any time
+       3. Give each player 2 coins
+    
+   Rules:
+   
+       Players have 2 influence represented by their face down character cards. If they lose an influence, they nee    d to reveal one of their face down cards. Once all influence is gone, they are exiled and out of the game.
+  
+   Gameplay:
+  
+      Game is played in turns.
+      The player must choose one action and cannot pass.
+      After the action, other players can either challenge or counteract that action, or else that action automati    cally succeed.
+      Once a player loses all their influence, they are exiled and out of the game. their cards remain face up and     their coins return to the treasury.
+  
+  Actions:
+  
+      Some actions (Character Actions) require a specific character card. A player may tell the truth or bluff.
+  
+      General Actions:
 
     General Actions:
         Income: Take 1 coin from the treasury.
@@ -49,3 +69,4 @@ Challenges
     Any action or counteraction that requires characters may be challenged. Once an action or counteraction is declared, other players must be given the opportunity to challenge. Once play continues, challenges cannot be retroactively issued.
 
     Once a player is challenged, they must show the character card that was required for their action or counteraction. If they have the card, the can shuffle that card into the deck and take a replacement card. Then the challenger loses one influence. If they didn't have the card, then they lose influence instead.
+    

@@ -34,16 +34,217 @@ order_of_players = []
 
 # this method prints everything a mod needs, including the rules and explanation of the mod actions 
 def help():
-    pass
+    print('''
+    Set Up:
+
+    1. Shuffle all character cards and deal 2 to each player.
+    2. Character cards are face down, but players can look at them at any time
+    3. Give each player 2 coins
+ 
+Rules:
+
+    Players have 2 influence represented by their face down character cards. If they lose an influence, they need to reveal one of their face down cards. Once all influence is gone, they are exiled and out of the game.
+
+ Gameplay:
+
+    Game is played in turns.
+    The player must choose one action and cannot pass.
+    After the action, other players can either challenge or counteract that action, or else that action automatically succeed.
+    Once a player loses all their influence, they are exiled and out of the game. their cards remain face up and their coins return to the treasury.
+
+Actions:
+
+    Some actions (Character Actions) require a specific character card. A player may tell the truth or bluff.
+       1. Shuffle all character cards and deal 2 to each player.
+       2. Character cards are face down, but players can look at them at any time
+       3. Give each player 2 coins
+    
+   Rules:
+   
+       Players have 2 influence represented by their face down character cards. If they lose an influence, they nee    d to reveal one of their face down cards. Once all influence is gone, they are exiled and out of the game.
+  
+   Gameplay:
+  
+      Game is played in turns.
+      The player must choose one action and cannot pass.
+      After the action, other players can either challenge or counteract that action, or else that action automati    cally succeed.
+      Once a player loses all their influence, they are exiled and out of the game. their cards remain face up and     their coins return to the treasury.
+  
+  Actions:
+  
+      Some actions (Character Actions) require a specific character card. A player may tell the truth or bluff.
+  
+      General Actions:
+
+    General Actions:
+        Income: Take 1 coin from the treasury.
+        
+        Foreign Aid: Take 2 coins from the treasury (can be blocked by Duke).
+
+        Coup: Pay 7 coins to the Treasury and target another player. That player immediately loses an influence. If you start yoru turn with 10 or more coins, you are required to Coup.
+    Character Cards and their Actions:
+        Duke - Tax: Take 3 coins from the treasury.
+        
+        Assassin - Assassinate: Pay 3 coins to the treasury and assinate another player. If successful, the player loses an influence. (Can be blocked by Contessa)
+
+        Captain - Steal: Take 2 coins from another player. If they have only one coin, take only one. (Can be blocked by Ambassador or the Captain)
+
+        Ambassador - Exchange: Take 2 random cards from the character. Switch any character cards you want. Return two cards to the deck.
+
+Counteractions:
+    
+    Counteractions are used to block a player\'s action. They require character cards, but may also be bluffed like actions.
+
+    Duke - Blocks Foreign Aid
+
+    Contessa - Blocks Assassination. Assassin still needs to pay the 3 coins.
+
+    Ambassador/Captain - Blocks Stealing
+
+Challenges:
+    
+    Any action or counteraction that requires characters may be challenged. Once an action or counteraction is declared, other players must be given the opportunity to challenge. Once play continues, challenges cannot be retroactively issued.
+
+    Once a player is challenged, they must show the character card that was required for their action or counteraction. If they have the card, the can shuffle that card into the deck and take a replacement card. Then the challenger loses one influence. If they didn\'t have the card, then they lose influence instead.
+
+Mod Actions:
+    help - prints all available information. Quite the info dump.
+
+    help_rules - prints information on the rules
+
+    help_actions - prints information on the mod actions
+
+    init [player1] [player2] [playern] - initializers players into the game. Takes 3 - 6 players as inputs and automatically gives them 2 character cards and coins.
+
+    stats_mod - prints all information about the current game. Should only be seen by the mod
+
+    stats - prints limited information about the current game, like player coins and revealed cards. Meant to be copy pasted by mod to show players
+
+    add [player] [number] - add coins to specificed player
+
+    remove [player] [number] - remove coins from specified player
+    
+    get_two - shows two cards from the deck and shuffles it
+
+    add_char [character1] [character2] [charactern] - adds specificed character cards to the deck 
+
+    exchange [player] [character1] [optional character2] - changes the player\'s card to the specified cards. Automatically adds the discarded cards back to the deck. Usually used in conjunction with get_two. WARNING: EASILY ABUSABLE AND POTENTIALLY GAME BREAKING, USE WITH CAUTION!!!!
+
+    replace [player] [character] - replaces a player\'s specified card with a random card from the deck. The deck is shuffled after.
+
+    kill [player] [character] - reveals the specified player\'s card. No option to undo, but perhaps exchange can break it, so don\'t try it.
+    ''')
+
+    
 
 # prints the rules
 def help_rules():
-    pass
+    print('''
+    Set Up:
+
+    1. Shuffle all character cards and deal 2 to each player.
+    2. Character cards are face down, but players can look at them at any time
+    3. Give each player 2 coins
+ 
+Rules:
+
+    Players have 2 influence represented by their face down character cards. If they lose an influence, they need to reveal one of their face down cards. Once all influence is gone, they are exiled and out of the game.
+
+ Gameplay:
+
+    Game is played in turns.
+    The player must choose one action and cannot pass.
+    After the action, other players can either challenge or counteract that action, or else that action automatically succeed.
+    Once a player loses all their influence, they are exiled and out of the game. their cards remain face up and their coins return to the treasury.
+
+Actions:
+
+    Some actions (Character Actions) require a specific character card. A player may tell the truth or bluff.
+       1. Shuffle all character cards and deal 2 to each player.
+       2. Character cards are face down, but players can look at them at any time
+       3. Give each player 2 coins
+    
+   Rules:
+   
+       Players have 2 influence represented by their face down character cards. If they lose an influence, they nee    d to reveal one of their face down cards. Once all influence is gone, they are exiled and out of the game.
+  
+   Gameplay:
+  
+      Game is played in turns.
+      The player must choose one action and cannot pass.
+      After the action, other players can either challenge or counteract that action, or else that action automati    cally succeed.
+      Once a player loses all their influence, they are exiled and out of the game. their cards remain face up and     their coins return to the treasury.
+  
+  Actions:
+  
+      Some actions (Character Actions) require a specific character card. A player may tell the truth or bluff.
+  
+      General Actions:
+
+    General Actions:
+        Income: Take 1 coin from the treasury.
+        
+        Foreign Aid: Take 2 coins from the treasury (can be blocked by Duke).
+
+        Coup: Pay 7 coins to the Treasury and target another player. That player immediately loses an influence. If you start yoru turn with 10 or more coins, you are required to Coup.
+    Character Cards and their Actions:
+        Duke - Tax: Take 3 coins from the treasury.
+        
+        Assassin - Assassinate: Pay 3 coins to the treasury and assinate another player. If successful, the player loses an influence. (Can be blocked by Contessa)
+
+        Captain - Steal: Take 2 coins from another player. If they have only one coin, take only one. (Can be blocked by Ambassador or the Captain)
+
+        Ambassador - Exchange: Take 2 random cards from the character. Switch any character cards you want. Return two cards to the deck.
+
+Counteractions:
+    
+    Counteractions are used to block a player\'s action. They require character cards, but may also be bluffed like actions.
+
+    Duke - Blocks Foreign Aid
+
+    Contessa - Blocks Assassination. Assassin still needs to pay the 3 coins.
+
+    Ambassador/Captain - Blocks Stealing
+
+Challenges:
+    
+    Any action or counteraction that requires characters may be challenged. Once an action or counteraction is declared, other players must be given the opportunity to challenge. Once play continues, challenges cannot be retroactively issued.
+
+    Once a player is challenged, they must show the character card that was required for their action or counteraction. If they have the card, the can shuffle that card into the deck and take a replacement card. Then the challenger loses one influence. If they didn\'t have the card, then they lose influence instead.
+    ''')
     
 # prints the mod actions and explanations for using them
 def help_actions():
-    pass
+    print('''
+            
+Mod Actions:
+    help - prints all available information. Quite the info dump.
 
+    help_rules - prints information on the rules
+
+    help_actions - prints information on the mod actions
+
+    init [player1] [player2] [playern] - initializers players into the game. Takes 3 - 6 players as inputs and automatically gives them 2 character cards and coins.
+
+    stats_mod - prints all information about the current game. Should only be seen by the mod
+
+    stats - prints limited information about the current game, like player coins and revealed cards. Meant to be copy pasted by mod to show players
+
+    add [player] [number] - add coins to specificed player
+
+    remove [player] [number] - remove coins from specified player
+    
+    get_two - shows two cards from the deck and shuffles it
+
+    add_char [character1] [character2] [charactern] - adds specificed character cards to the deck 
+
+    exchange [player] [character1] [optional character2] - changes the player\'s card to the specified cards. Automatically adds the discarded cards back to the deck. Usually used in conjunction with get_two. WARNING: EASILY ABUSABLE AND POTENTIALLY GAME BREAKING, USE WITH CAUTION!!!!
+
+    replace [player] [character] - replaces a player\'s specified card with a random card from the deck. The deck is shuffled after.
+
+    kill [player] [character] - reveals the specified player\'s card. No option to undo, but perhaps exchange can break it, so don\'t try it.
+    ''')
+    
 # making some methods to view the stats
 def stats_mod():
     print('\nNumber of characters in deck:', len(char_deck))
@@ -162,7 +363,6 @@ def replace(player, str):
 
 ############# END OF MOD ACTIONS #############
 
-=======
 # testing
 '''
 init('Alan', 'Colin', 'Wilson') 
@@ -252,7 +452,6 @@ while True:
     while invalid_input:
         if len(cmd_tokens) < 1:
             cmd_tokens = input("Empty command entered, please try again. Enter command: ").split()
-=======
             cmd_tokens = input("\nEmpty command entered, please try again.\nEnter command: ").lower().split()
         elif function_signature(cmd_tokens[0]) == "not found":
             cmd_tokens = input("\nCommand not found, please try again.\nEnter command: ").lower().split()
