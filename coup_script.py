@@ -451,7 +451,6 @@ while True:
     invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens, players)
     while invalid_input:
         if len(cmd_tokens) < 1:
-            cmd_tokens = input("Empty command entered, please try again. Enter command: ").split()
             cmd_tokens = input("\nEmpty command entered, please try again.\nEnter command: ").lower().split()
         elif function_signature(cmd_tokens[0]) == "not found":
             cmd_tokens = input("\nCommand not found, please try again.\nEnter command: ").lower().split()
@@ -463,21 +462,6 @@ while True:
             cmd_tokens = input("Enter command: ").lower().split()
 
         invalid_input = (len(cmd_tokens) < 1) or not command_verified(cmd_tokens, players)
- 
-
-    # call functions here, now that they're verified to be correct
-    cmd = cmd_tokens[0]
-    if cmd == "help":
-        pass    
-    elif cmd == "stats":
-        stats() 
-    elif cmd == "stats_mod":
-        stats_mod()
-    elif cmd == "init":
-        for i in range(len(cmd_tokens) - 1):
-            init([cmd_tokens(i + 1)])
-    else:
-        pass
 
     # call functions here, now that they're verified to be correct:
     cmd = cmd_tokens[0]
